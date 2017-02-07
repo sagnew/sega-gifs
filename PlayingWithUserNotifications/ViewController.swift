@@ -31,7 +31,9 @@ class ViewController: UIViewController {
     }
     
     func fetchNotificationGIF() {
-        let imageLimit:UInt32 = 25
+        
+        print("YO")
+        let imageLimit:UInt32 = 50
         
         Alamofire.request("https://api.giphy.com/v1/gifs/search", parameters: ["api_key": "dc6zaTOxFJmzC", "q": "beer", "limit": "\(imageLimit)"])
             .responseJSON { response in
@@ -39,7 +41,8 @@ class ViewController: UIViewController {
                     let json = JSON(result)
                     let randomNum:Int = Int(arc4random_uniform(imageLimit))
                     
-                    if let imageURLString = json["data"][randomNum]["images"]["original"]["url"].string {
+                    if let imageURLString = json["data"][randomNum]["images"]["downsized"]["url"].string {
+                        print(imageURLString)
                         self.handleAttachmentImage(forImageURL: imageURLString)
                     }
                     
@@ -48,15 +51,16 @@ class ViewController: UIViewController {
     }
     
     func handleAttachmentImage(forImageURL imageURLString: String) {
-        Alamofire.request(imageURLString).responseImage { response in
-            if let image = response.result.value {
-                print("image downloaded: \(image)")
+        Alamofire.request(imageURLString).responseData { response in
+            if let data = response.result.value {
+                print("image downloaded: \(data)")
                 
                 let fm = FileManager.default
                 let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
                 let fileURL = docsurl.appendingPathComponent("img.gif")
                 
-                try! UIImageJPEGRepresentation(image, 1.0)?.write(to: fileURL)
+                // try! UIImageJPEGRepresentation(image, 1.0)?.write(to: fileURL)
+                try! data.write(to: fileURL)
                 self.scheduleNotification(inSeconds: 5, attachmentURL: fileURL, completion: { success in
                     if success {
                         print("Successfully scheduled notification")

@@ -9,7 +9,6 @@
 import UIKit
 import UserNotifications
 import Alamofire
-import AlamofireImage
 import SwiftyJSON
 
 class ViewController: UIViewController {

@@ -5,7 +5,6 @@ target 'PlayingWithUserNotifications' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   pod 'Alamofire', '~> 4.3'
-  pod 'AlamofireImage', '~> 3.1'
   pod 'SwiftyJSON', '~> 3.1.4'
 
   # Pods for PlayingWithUserNotifications

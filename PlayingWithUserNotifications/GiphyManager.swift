@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import PromiseKit
 
 class GiphyManager: NSObject {
     
@@ -28,20 +29,23 @@ class GiphyManager: NSObject {
         super.init()
     }
     
-    func fetchRandomGifUrl(forSearchQuery query: String, completionHandler: @escaping (_ forImageUrl: String) -> Void) {
-        
-        Alamofire.request(self.giphyBaseURL, parameters: ["api_key": self.apiKey, "q": query, "limit": "\(self.imageLimit)"])
-            .responseJSON { response in
-                if let result = response.result.value {
-                    let json = JSON(result)
-                    let randomNum:Int = Int(arc4random_uniform(self.imageLimit))
+    func fetchRandomGifUrl(forSearchQuery query: String) -> Promise<String> { //completionHandler: @escaping (_ forImageUrl: String) -> Void) {
+        return Promise { fulfill, reject in
+            Alamofire.request(self.giphyBaseURL, parameters: ["api_key": self.apiKey, "q": query, "limit": "\(self.imageLimit)"])
+                .responseJSON { response in
+                    if let result = response.result.value {
+                        let json = JSON(result)
+                        let randomNum:Int = Int(arc4random_uniform(self.imageLimit))
+                        
+                        if let imageUrlString = json["data"][randomNum]["images"]["downsized"]["url"].string {
+                            print(imageUrlString)
+                            fulfill(imageUrlString) // completionHandler(imageUrlString)
+                        } else {
+                            reject(response.error!)
+                        }
                     
-                    if let imageUrlString = json["data"][randomNum]["images"]["downsized"]["url"].string {
-                        print(imageUrlString)
-                        completionHandler(imageUrlString)
                     }
-                    
-                }
+            }
         }
     }
 }

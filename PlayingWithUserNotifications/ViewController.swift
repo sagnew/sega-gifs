@@ -10,6 +10,7 @@ import UIKit
 import UserNotifications
 import Alamofire
 import SwiftyJSON
+import PromiseKit
 
 class ViewController: UIViewController {
 
@@ -17,7 +18,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetchNotificationGIF()
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,57 +26,47 @@ class ViewController: UIViewController {
     }
 
     @IBAction func notificationButtonTapped(_ sender: Any) {
-        self.fetchNotificationGIF()
+        let giphy = GiphyManager()
+        
+        giphy.fetchRandomGifUrl(forSearchQuery: "beer").then { imageUrlString in
+                self.handleAttachmentImage(forImageUrl: imageUrlString)
+            }.then { attachmentUrl in
+                self.scheduleNotification(inSeconds: 5, attachmentUrl: attachmentUrl) { success in
+                    print(success)
+                }
+            }.catch { error in
+                print(error)
+            }
     }
     
-    func fetchNotificationGIF() {
-        
-        print("YO")
-        let imageLimit:UInt32 = 50
-        
-        Alamofire.request("https://api.giphy.com/v1/gifs/search", parameters: ["api_key": "dc6zaTOxFJmzC", "q": "beer", "limit": "\(imageLimit)"])
-            .responseJSON { response in
-                if let result = response.result.value {
-                    let json = JSON(result)
-                    let randomNum:Int = Int(arc4random_uniform(imageLimit))
+    func handleAttachmentImage(forImageUrl imageUrlString: String) -> Promise<URL> {
+        return Promise { fulfill, reject in
+            Alamofire.request(imageUrlString).responseData { response in
+                if let data = response.result.value {
+                    print("image downloaded: \(data)")
                     
-                    if let imageURLString = json["data"][randomNum]["images"]["downsized"]["url"].string {
-                        print(imageURLString)
-                        self.handleAttachmentImage(forImageURL: imageURLString)
+                    let fm = FileManager.default
+                    let docsUrl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                    let fileUrl = docsUrl.appendingPathComponent("img.gif")
+                    
+                    do {
+                        try data.write(to: fileUrl)
+                        fulfill(fileUrl)
+                    } catch {
+                        reject(error)
                     }
                     
                 }
-        }
-    }
-    
-    func handleAttachmentImage(forImageURL imageURLString: String) {
-        Alamofire.request(imageURLString).responseData { response in
-            if let data = response.result.value {
-                print("image downloaded: \(data)")
-                
-                let fm = FileManager.default
-                let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                let fileURL = docsurl.appendingPathComponent("img.gif")
-                
-                // try! UIImageJPEGRepresentation(image, 1.0)?.write(to: fileURL)
-                try! data.write(to: fileURL)
-                self.scheduleNotification(inSeconds: 5, attachmentURL: fileURL, completion: { success in
-                    if success {
-                        print("Successfully scheduled notification")
-                    } else {
-                        print("Error scheduling notification")
-                    }
-                })
             }
         }
     }
     
-    func scheduleNotification(inSeconds: TimeInterval, attachmentURL: URL, completion: @escaping (Bool) -> ()) {
+    func scheduleNotification(inSeconds: TimeInterval, attachmentUrl: URL, completion: @escaping (Bool) -> ()) {
         
         // Create an attachment for the notification
         var attachment: UNNotificationAttachment
         
-        attachment = try! UNNotificationAttachment(identifier: notificationIdentifier, url: attachmentURL, options: .none)
+        attachment = try! UNNotificationAttachment(identifier: notificationIdentifier, url: attachmentUrl, options: .none)
         
         // Create Notification content
         let notificationContent = UNMutableNotificationContent()

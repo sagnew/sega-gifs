@@ -6,6 +6,7 @@ target 'PlayingWithUserNotifications' do
   use_frameworks!
   pod 'Alamofire', '~> 4.3'
   pod 'SwiftyJSON', '~> 3.1.4'
+  pod "PromiseKit", "~> 4.0"
 
   # Pods for PlayingWithUserNotifications
 

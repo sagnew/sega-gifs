@@ -71,11 +71,14 @@ class ViewController: UIViewController {
         // Create Notification content
         let notificationContent = UNMutableNotificationContent()
         
-        notificationContent.title = "Check this out"
-        notificationContent.subtitle = "It's a notification"
-        notificationContent.body = "WHOA COOL"
+        notificationContent.title = "I hope you're having a rad time!"
+        notificationContent.subtitle = "Be responsible and don't drive :)"
+        notificationContent.body = "Are you still drinking and want more beer GIFs?"
         
         notificationContent.attachments = [attachment]
+        
+        // Add a category
+        notificationContent.categoryIdentifier = "stillDrinkingOptions"
         
         // Create Notification trigger
         // Note that 60 seconds is the smallest repeating interval.

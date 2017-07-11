@@ -16,24 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        // Request Permission
-        UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert, .badge]) {
-            granted, error in
-            if granted {
-                print("Approval granted to send notifications")
-            } else {
-                print("\(error)")
-            }
-        }
-        
-        let yesAction = UNNotificationAction(identifier: "yes", title: "Yes", options: [])
-        let noAction = UNNotificationAction(identifier: "no", title: "No", options: [])
-        let category = UNNotificationCategory(identifier: "stillDrinkingOptions", actions: [yesAction, noAction], intentIdentifiers: [], options: [])
-        UNUserNotificationCenter.current().setNotificationCategories([category])
-        
-        UNUserNotificationCenter.current().delegate = self
-        
+   
         return true
     }
 
@@ -60,25 +43,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler(.alert)
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        if response.actionIdentifier == "yes" {
-            NotificationManager.sharedInstance.createNotification()
-            completionHandler()
-        }
-    }
-}
-
-
-
-
-
-
-

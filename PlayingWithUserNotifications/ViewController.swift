@@ -10,9 +10,10 @@ import UIKit
 
 import Alamofire
 import SwiftyJSON
+import UserNotifications
 
 class ViewController: UIViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }

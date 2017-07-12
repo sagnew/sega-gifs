@@ -1,11 +1,3 @@
-//
-//  GiphyManager.swift
-//  PlayingWithUserNotifications
-//
-//  Created by Sam Agnew on 2/7/17.
-//  Copyright © 2017 Sam Agnew. All rights reserved.
-//
-
 import UIKit
 import Alamofire
 import SwiftyJSON
@@ -43,7 +35,6 @@ class GiphyManager: NSObject {
                         } else {
                             reject(response.error!)
                         }
-                    
                     }
             }
         }

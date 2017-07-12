@@ -13,6 +13,8 @@
 		E008E1C61E491F0200B81B4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E008E1C41E491F0200B81B4E /* Main.storyboard */; };
 		E008E1C81E491F0200B81B4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E008E1C71E491F0200B81B4E /* Assets.xcassets */; };
 		E008E1CB1E491F0200B81B4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E008E1C91E491F0200B81B4E /* LaunchScreen.storyboard */; };
+		E01FE1491F157A420073CC7A /* GiphyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01FE1481F157A420073CC7A /* GiphyManager.swift */; };
+		E01FE14B1F1582130073CC7A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01FE14A1F1582130073CC7A /* NotificationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		E008E1C71E491F0200B81B4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E008E1CA1E491F0200B81B4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E008E1CC1E491F0200B81B4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E01FE1481F157A420073CC7A /* GiphyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyManager.swift; sourceTree = "<group>"; };
+		E01FE14A1F1582130073CC7A /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,8 @@
 				E008E1C71E491F0200B81B4E /* Assets.xcassets */,
 				E008E1C91E491F0200B81B4E /* LaunchScreen.storyboard */,
 				E008E1CC1E491F0200B81B4E /* Info.plist */,
+				E01FE1481F157A420073CC7A /* GiphyManager.swift */,
+				E01FE14A1F1582130073CC7A /* NotificationManager.swift */,
 			);
 			path = PlayingWithUserNotifications;
 			sourceTree = "<group>";
@@ -213,6 +219,8 @@
 			files = (
 				E008E1C31E491F0200B81B4E /* ViewController.swift in Sources */,
 				E008E1C11E491F0200B81B4E /* AppDelegate.swift in Sources */,
+				E01FE14B1F1582130073CC7A /* NotificationManager.swift in Sources */,
+				E01FE1491F157A420073CC7A /* GiphyManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +384,7 @@
 				E008E1D11E491F0200B81B4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

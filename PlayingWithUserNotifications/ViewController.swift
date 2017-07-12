@@ -10,7 +10,6 @@ import UIKit
 
 import Alamofire
 import SwiftyJSON
-import PromiseKit
 
 class ViewController: UIViewController {
     
@@ -24,8 +23,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func notificationButtonTapped(_ sender: Any) {
-        NotificationManager.sharedInstance.createNotification()
+        NotificationManager.sharedInstance.createNotification() 
     }
-
+    
 }
-

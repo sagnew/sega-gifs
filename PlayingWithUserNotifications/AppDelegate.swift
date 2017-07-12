@@ -29,7 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let yesAction = UNNotificationAction(identifier: "yes", title: "Yes", options: [])
         let noAction = UNNotificationAction(identifier: "no", title: "No", options: [])
-        let category = UNNotificationCategory(identifier: "stillDrinkingOptions", actions: [yesAction, noAction], intentIdentifiers: [], options: [])
+
+        let category = UNNotificationCategory(identifier: "moreNotificationsOptions", actions: [yesAction, noAction], intentIdentifiers: [], options: [])
         UNUserNotificationCenter.current().setNotificationCategories([category])
         
         UNUserNotificationCenter.current().delegate = self
@@ -75,10 +76,3 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
     }
 }
-
-
-
-
-
-
-

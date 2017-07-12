@@ -1,11 +1,3 @@
-//
-//  NotificationManager.swift
-//  PlayingWithUserNotifications
-//
-//  Created by Sam Agnew on 2/9/17.
-//  Copyright © 2017 Sam Agnew. All rights reserved.
-//
-
 import UIKit
 import UserNotifications
 
@@ -22,14 +14,14 @@ class NotificationManager: NSObject {
     func createNotification() {
         let giphy = GiphyManager()
         
-        giphy.fetchRandomGifUrl(forSearchQuery: "beer").then { imageUrlString in
+        giphy.fetchRandomGifUrl(forSearchQuery: "SEGA Genesis").then { imageUrlString in
             NotificationManager.sharedInstance.handleAttachmentImage(forImageUrl: imageUrlString)
-            }.then { attachmentUrl in
-                NotificationManager.sharedInstance.scheduleNotification(inSeconds: 5, attachmentUrl: attachmentUrl) { success in
-                    print(success)
-                }
-            }.catch { error in
-                print(error)
+        }.then { attachmentUrl in
+            NotificationManager.sharedInstance.scheduleNotification(inSeconds: 5, attachmentUrl: attachmentUrl) { success in
+                print(success)
+            }
+        }.catch { error in
+            print(error)
         }
     }
     
@@ -65,14 +57,14 @@ class NotificationManager: NSObject {
         // Create Notification content
         let notificationContent = UNMutableNotificationContent()
         
-        notificationContent.title = "I hope you're having a rad time!"
-        notificationContent.subtitle = "Be responsible and don't drive :)"
-        notificationContent.body = "Are you still drinking and want more beer GIFs?"
+        notificationContent.title = "SEGA does what Ninten-DON'T"
+        notificationContent.subtitle = "Blast Processing!"
+        notificationContent.body = "Did you know the SEGA Genesis' Yamaha YM2612 sound chip had six FM channels?"
         
         notificationContent.attachments = [attachment]
         
         // Add a category
-        notificationContent.categoryIdentifier = "stillDrinkingOptions"
+        notificationContent.categoryIdentifier = "moreNotificationsOptions"
         
         // Create Notification trigger
         // Note that 60 seconds is the smallest repeating interval.
